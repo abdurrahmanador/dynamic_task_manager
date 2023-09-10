@@ -97,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(height: 10),
                   TextFormField(
                     controller: _lastNameTEController,
-                    decoration: InputDecoration(hintText: "Last Name"),
+                    decoration: const InputDecoration(hintText: "Last Name"),
                       validator: (String? value){
                         if(value!.isEmpty){
                           return "Please Enter Your Last Name";
@@ -150,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: double.infinity,
                     child: Visibility(
                       visible: _isSignupProgress==false,
-                      replacement: Center(child: CircularProgressIndicator()),
+                      replacement: const Center(child: CircularProgressIndicator()),
                       child: ElevatedButton(
                           onPressed: () {
                             if(!_formkey.currentState!.validate()){
@@ -158,13 +158,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                             else{
                             userSignUp();}
-                          }, child: Icon(Icons.arrow_forward)),
+                          }, child: const Icon(Icons.arrow_forward)),
                     ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Have an account?",
                         style: TextStyle(
                             fontWeight: FontWeight.w500, letterSpacing: 0.5),

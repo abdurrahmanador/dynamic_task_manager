@@ -7,95 +7,108 @@ import 'package:flutter/material.dart';
 import '../../widgets/app_bar.dart';
 import '../../widgets/screen_background.dart';
 
-class AddNewTask extends StatefulWidget {
-  const AddNewTask({super.key});
+class AddNewTaskScreen extends StatefulWidget {
+  const AddNewTaskScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddNewTask> createState() => _AddNewTaskState();
+  State<AddNewTaskScreen> createState() => _AddNewTaskScreenState();
 }
 
-class _AddNewTaskState extends State<AddNewTask> {
+class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
+  final TextEditingController _titleTEController = TextEditingController();
+  final TextEditingController _descriptionTEController =
+  TextEditingController();
+  bool _adNewTaskInProgress = false;
 
-  TextEditingController _titleETController=TextEditingController();
-  TextEditingController _descriptionETController=TextEditingController();
-  bool isTaskProgress=false;
-
-  Future<void> addNewTask()async{
-    isTaskProgress=true;
-    if(mounted) {
+  Future<void> addNewTask() async {
+    _adNewTaskInProgress = true;
+    if (mounted) {
       setState(() {});
     }
-    Map<String,dynamic> requestBody=
-      {
-        "title":_titleETController.text.trim(),
-        "description":_titleETController.text.trim(),
-        "status":"New"
-      };
-    final NetworkResponse response=
-        await NetworkCaller().postRequest(Urls.createTask, requestBody);
-    isTaskProgress=false;
-    setState(() {
-    });
-    if(response.isSuccessfull){
-      _titleETController.clear();
-      _descriptionETController.clear();
-
-      if(mounted){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Added Successfully")));
+    Map<String, dynamic> requestBody = {
+      "title": _titleTEController.text.trim(),
+      "description": _descriptionTEController.text.trim(),
+      "status": "New"
+    };
+    final NetworkResponse response =
+    await NetworkCaller().postRequest(Urls.createTask, requestBody);
+    _adNewTaskInProgress = false;
+    if (mounted) {
+      setState(() {});
+    }
+    if (response.isSuccessfull) {
+      _titleTEController.clear();
+      _descriptionTEController.clear();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Task added successfully')));
       }
-      else{
-        isTaskProgress=false;
-        setState(() {
-        });
-        if(mounted) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("Failed To Add Task")));
-        }
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Task add failed!')));
       }
     }
-}
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ScreenBackground(
-          child: Column(
-            children: [
-              appBar(),
-              Text("Add New Task",style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20
-              ),),
-              SizedBox(height: 25,),
-              TextFormField(
-                controller: _titleETController,
-                decoration: InputDecoration(
-                  hintText: "title"
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const appBar(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    'Add new task',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    controller: _titleTEController,
+                    decoration: const InputDecoration(hintText: 'Title'),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  TextFormField(
+                    controller: _descriptionTEController,
+                    maxLines: 4,
+                    decoration: const InputDecoration(
+                      hintText: 'Description',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Visibility(
+                      visible: _adNewTaskInProgress == false,
+                      replacement: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            addNewTask();
+                          },
+                          child: const Icon(Icons.arrow_forward_ios)),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 10,),
-              TextFormField(
-                controller: _descriptionETController,
-                maxLines: 5,
-                decoration: InputDecoration(
-                  hintText: "Description"
-                ),
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: Visibility(
-                  visible: isTaskProgress==false,
-                  replacement: Center(child: CircularProgressIndicator(),),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        addNewTask();}, child: Icon(Icons.arrow_forward)),
-                ),
-              ),
-            ],
-          ),
-
+            ),
+          ],
         ),
       ),
     );

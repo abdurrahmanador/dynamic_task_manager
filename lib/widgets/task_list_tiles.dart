@@ -1,41 +1,52 @@
-
 import 'package:flutter/material.dart';
 
-class TaskListTiles extends StatelessWidget {
+import '../data/models/task_status_model.dart';
 
-  final String title;
-  final  Color;
-  const TaskListTiles({
-    super.key, required this.title, this.Color,
-  });
+class TaskListTiles extends StatelessWidget {
+  final VoidCallback onDeleteTap, onEditTap;
+
+  const TaskListTiles(
+      {super.key,
+      required this.data,
+      required this.onDeleteTap,
+      required this.onEditTap});
+
+  final TaskData data;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text("Here is the Title",style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16
-        ),),
+        title: Text(
+          data.title ?? 'Unknown',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("title will be here"),
-            Text("Date"),
+            Text(data.description ?? ''),
+            Text(data.createdDate ?? ''),
             Row(
               children: [
-                Chip(label:Text("$title"),backgroundColor: Color,),
+                Chip(
+                  label: Text(data.status ?? "New"),
+                  backgroundColor: Colors.tealAccent,
+                ),
                 Spacer(),
-                IconButton(onPressed:(){},
-                  icon: Icon( Icons.edit,),color: Colors.green,),
-                IconButton(onPressed:(){},
-                  icon: Icon(Icons.delete),color: Colors.redAccent,),
-
+                IconButton(
+                  onPressed: onDeleteTap,
+                  icon: Icon(
+                    Icons.delete,
+                  ),
+                  color: Colors.green,
+                ),
+                IconButton(
+                  onPressed: onEditTap,
+                  icon: Icon(Icons.edit),
+                  color: Colors.redAccent,
+                ),
               ],
             )
           ],
-        )
-
-    );
+        ));
   }
 }
-

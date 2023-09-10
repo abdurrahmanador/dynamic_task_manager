@@ -32,4 +32,10 @@ class AuthUtility {
     }
     return isLogin;
   }
+
+  static Future<void> updateUserInfo(UserData data) async {
+    SharedPreferences _sharedPrefs = await SharedPreferences.getInstance();
+    userInfo.data = data;
+    await _sharedPrefs.setString('user-data', jsonEncode(userInfo.toJson()));
+  }
 }

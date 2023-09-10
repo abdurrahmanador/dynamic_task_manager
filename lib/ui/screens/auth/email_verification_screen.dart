@@ -1,10 +1,44 @@
+import 'package:dynamic_task_manager/data/models/email_verification_model.dart';
+import 'package:dynamic_task_manager/data/models/network_response.dart';
+import 'package:dynamic_task_manager/data/services/network_caller.dart';
+import 'package:dynamic_task_manager/data/utills/urls.dart';
 import 'package:dynamic_task_manager/widgets/screen_background.dart';
 import 'package:flutter/material.dart';
 
 import 'otp_verification_screen.dart';
 
-class emailVerificationScreen extends StatelessWidget {
-  const emailVerificationScreen({super.key});
+class EmailVerificationScreen extends StatefulWidget {
+  const EmailVerificationScreen({Key? key}) : super(key: key);
+
+  @override
+  _EmailVerificationScreenState createState() =>
+      _EmailVerificationScreenState();
+}
+
+class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+  TextEditingController _emailVerificationController = TextEditingController();
+  bool _isEmailSent = false;
+  EmailVerificationModel _emailVerificationModel = EmailVerificationModel();
+
+  Future<void> emailSent(String emailAddress) async {
+    // Get the email address from the TextFormField
+    // Send the email to the server
+    final NetworkResponse response =
+    await NetworkCaller().getRequest(Urls.reecoverVerifyEmail(_emailVerificationController.text));
+
+    if (response.isSuccessfull) {
+      // Navigate to OTP verification screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>  otpVerificationScreen(email:_emailVerificationController.text),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Email Sending Failed")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,25 +52,47 @@ class emailVerificationScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Email Verification",
-                style: Theme.of(context).textTheme.titleLarge),
-                SizedBox(height:20),
-                TextField(
+                    style: Theme.of(context).textTheme.headline6),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: _emailVerificationController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(hintText: "Enter Your Email."),
+                  decoration: InputDecoration(hintText: "Enter Your Email"),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please Enter Email";
+                    }
+                    return null;
+                  },
                 ),
-                SizedBox(height: 26,),
+                SizedBox(
+                  height: 26,
+                ),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)
-                      => const otpVerificationScreen()));
-                    },child: Icon(Icons.arrow_forward),
+                  child: Visibility(
+                    visible: !_isEmailSent, // Show button if email not sent
+                    replacement: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_isEmailSent) {
+                          // Don't allow sending email again
+                          return;
+                        }
+                        setState(() {
+                          _isEmailSent = true; // Mark email as sent
+                        });
+                        emailSent(_emailVerificationController.text);
+                      },
+                      child: const Icon(Icons.arrow_forward),
+                    ),
                   ),
                 )
               ],
             ),
-          )
+          ),
         ),
       ),
     );
