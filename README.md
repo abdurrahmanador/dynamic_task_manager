@@ -21,11 +21,11 @@
 <img src="https://github.com/abdurrahmanador/dynamic_task_manager/blob/master/20.jpg" height=300 wdith=180><br>
 
 
- used:
 01. Dart
 02. Flutter
 03. Android Studio
 04. Rest API
-05. MVVM Pattern(Mostly)
+05. CRUD
+06. MVVM Pattern(Mostly)
 
 ---Abdur Rahman
