@@ -1,13 +1,17 @@
 # Dynamic Task Management App
-Note: . In this project I tried to I didn't focus too much On UI rather I focused backend API implementation and State Management , this app is for Learning Purpose .
- 
-01. Dart
-02. Flutter
-03. Android Studio
-04. Rest API
-05. CRUD
-06. MVVM Pattern(Mostly)
+Introducing a dynamic Task Management App where people can efficiently manage their tasks with dynamic functionality.
 
+Please note that in this project, I prioritized backend API implementation and state management over the UI design. This app serves as a learning tool.
+
+Technologies used:
+
+Dart
+Flutter
+Android Studio
+Rest API
+CRUD
+MVVM Pattern (mostly)
+Thank you for your interest!
 ---Abdur Rahman
 
 <img src="https://github.com/abdurrahmanador/dynamic_task_manager/blob/master/11.jpg" height=300 wdith=180>
