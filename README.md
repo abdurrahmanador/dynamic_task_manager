@@ -1,6 +1,6 @@
 # Dynamic Task Management App
 Note: . In this project I tried to I didn't focus too much On UI rather I focused backend API implementation and State Management , this app is for Learning Purpose .
-
+ 
 01. Dart
 02. Flutter
 03. Android Studio
