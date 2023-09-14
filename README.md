@@ -1,4 +1,14 @@
-# dynamic_task_manager
+# Dynamic Task Management Ap
+Note: . In this project I tried to I didn't focus too much On UI rather I focused backend API implementation and State Management , this app is for Learning Purpose .
+
+01. Dart
+02. Flutter
+03. Android Studio
+04. Rest API
+05. CRUD
+06. MVVM Pattern(Mostly)
+
+---Abdur Rahman
 
 <img src="https://github.com/abdurrahmanador/dynamic_task_manager/blob/master/11.jpg" height=300 wdith=180>
 <br>
@@ -20,12 +30,3 @@
 
 <img src="https://github.com/abdurrahmanador/dynamic_task_manager/blob/master/20.jpg" height=300 wdith=180><br>
 
-
-01. Dart
-02. Flutter
-03. Android Studio
-04. Rest API
-05. CRUD
-06. MVVM Pattern(Mostly)
-
----Abdur Rahman
