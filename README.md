@@ -5,13 +5,12 @@ Please note that in this project, I prioritized backend API implementation and s
 
 Technologies used:
 
-Dart
-Flutter
-Android Studio
-Rest API
-CRUD
-MVVM Pattern (mostly)
-Thank you for your interest!
+Dart<br>
+Flutter<br>
+Android Studio<br>
+Rest API<br>
+CRUD<br>
+Thank you for your interest!<br>
 ---Abdur Rahman
 
 <img src="https://github.com/abdurrahmanador/dynamic_task_manager/blob/master/11.jpg" height=300 wdith=180>
